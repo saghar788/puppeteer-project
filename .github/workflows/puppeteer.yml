@@ -35,6 +35,14 @@ jobs:
       - name: Run Puppeteer script
         run: node puppeteer-script.js  # Run your Puppeteer script
 
+      - name: Check if token is available
+        run: |
+          if [ -z "${{ secrets.GITI }}" ]; then
+            echo "GITI secret is not set!"
+          else
+            echo "GITI secret is set!"
+          fi
+
       - name: Deploy to GitHub Pages (using git done!)
         run: |
           git config --global user.name "saghar788"
@@ -50,6 +58,6 @@ jobs:
           # Use GitHub token for authentication
           git remote set-url origin https://x-access-token:${{ secrets.GITI }}@github.com/saghar788/puppeteer-project.git
           git push origin gh-pages
-          git add .
+          git add . 
           git commit -m "Deploy to GitHub Pages"
           git push origin gh-pages
