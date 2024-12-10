@@ -48,7 +48,7 @@ jobs:
           echo "GitHub Pages" > index.html  # Create an initial file for the gh-pages branch
           
           # Use GitHub token for authentication
-          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/saghar788/puppeteer-project.git
+          git remote set-url origin https://x-access-token:${{ secrets.GITI }}@github.com/saghar788/puppeteer-project.git
           git push origin gh-pages
           git add .
           git commit -m "Deploy to GitHub Pages"
