@@ -36,12 +36,13 @@ jobs:
         run: node puppeteer-script.js  # Run your Puppeteer script
 
       - name: Check if token is available
+        shell: pwsh
         run: |
-          if [ -z "${{ secrets.GITI }}" ]; then
-            echo "GITI secret is not set!"
-          else
-            echo "GITI secret is set!"
-          fi
+          if ($env:GITI) {
+            Write-Host "GITI secret is set!"
+          } else {
+            Write-Host "GITI secret is not set!"
+          }
 
       - name: Deploy to GitHub Pages (using git done!)
         run: |
