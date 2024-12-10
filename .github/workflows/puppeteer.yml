@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main  # Trigger on push to the main branch
+permissions:
+  contents: write  # Allows write access to repository contents
+  actions: read    # Allows read access to actions
+  issues: write    # Allows write access to issues (optional, depending on need)
 jobs:
   run-puppeteer:
     runs-on: windows-latest  # Running on a Windows environment
