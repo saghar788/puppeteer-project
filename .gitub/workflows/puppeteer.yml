@@ -36,7 +36,7 @@ jobs:
         run: node puppeteer-script.js  # Run your Puppeteer script
 
 
-      - name: Deploy to GitHub Pages (using git)
+      - name: Deploy to GitHub Pages (using git done!)
       run: |
         git config --global user.name "saghar788"
         git config --global user.email "kharal.tech786@gmail.com"
