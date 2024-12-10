@@ -1,0 +1,54 @@
+name: Puppeteer Deployment
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+jobs:
+  run-puppeteer:
+    runs-on: windows-latest  # Running on a Windows environment
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Node.js (latest version)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'node'  # Use the latest version of Node
+
+      - name: Install rsync via Chocolatey
+        run: |
+          choco install rsync        
+
+      - name: Create Puppeteer cache directory
+        run: |
+          mkdir -p C:\Users\RunnerAdmin\.cache\puppeteer
+          icacls C:\Users\RunnerAdmin\.cache\puppeteer /grant "Everyone:F" /T  # Ensure correct permissions
+
+      - name: Install dependencies
+        run: npm install  # Install necessary dependencies including Puppeteer
+
+      - name: Install Puppeteer and dependencies
+        run: npm install puppeteer  # Install Puppeteer
+
+      - name: npx puppeteer browsers install chrome
+        run: npx puppeteer browsers install chrome
+
+      - name: Run Puppeteer script
+        run: node puppeteer-script.js  # Run your Puppeteer script
+
+
+      - name: Deploy to GitHub Pages (using git)
+      run: |
+        git config --global user.name "saghar788"
+        git config --global user.email "kharal.tech786@gmail.com"
+        git fetch origin
+        git checkout --orphan gh-pages  # Create and switch to gh-pages branch
+        git rm -rf .  # Remove old files from gh-pages
+        git commit --allow-empty -m "Initial gh-pages commit"
+        
+        # Use GitHub token for authentication
+        git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/saghar788/puppeteer-project.git
+        git push origin gh-pages
+        cd gh-pages
+        git add .
+        git commit -m "Deploy to GitHub Pages"
+        git push origin gh-pages
