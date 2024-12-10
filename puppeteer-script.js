@@ -8,16 +8,7 @@ async function run() {
   const title = await page.title();
   await browser.close();
 
-  const outputHtml = `
-    <html>
-      <head><title>Puppeteer Output</title></head>
-      <body>
-        <h1>Title of the page: ${title}</h1>
-      </body>
-    </html>
-  `;
-
-  fs.writeFileSync('output/index.html', outputHtml);
+  console.log(`Title of the page: ${title}`);
 }
 
 run();
