@@ -38,10 +38,10 @@ jobs:
       - name: Check if token is available
         shell: pwsh
         run: |
-          if ($env:GITI) {
-            Write-Host "GITI secret is set!"
+          if ($env:GITHUB_TOKEN) {
+            Write-Host "GITHUB_TOKEN secret is set!"
           } else {
-            Write-Host "GITI secret is not set!"
+            Write-Host "GITHUB_TOKEN secret is not set!"
           }
 
       - name: Deploy to GitHub Pages (using git done!)
@@ -57,7 +57,7 @@ jobs:
           echo "GitHub Pages" > index.html  # Create an initial file for the gh-pages branch
           
           # Use GitHub token for authentication
-          git remote set-url origin https://x-access-token:${{ secrets.GITI }}@github.com/saghar788/puppeteer-project.git
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/saghar788/puppeteer-project.git
           git push origin gh-pages
           git add . 
           git commit -m "Deploy to GitHub Pages"
